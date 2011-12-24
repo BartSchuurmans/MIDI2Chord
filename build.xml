@@ -1,0 +1,47 @@
+<project name="midi2chord" default="build" basedir=".">
+	<property name="project.name" value="midi2chord" />
+
+	<property name="src.dir" value="src" />
+	<property name="lib.dir" value="lib" />
+	<property name="build.dir" value="build" />
+	<property name="build.classes.dir" value="${build.dir}/classes" />
+	<property name="build.lib.dir" value="${build.dir}/lib" />
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="all" depends="build">
+	</target>
+
+	<target name="build" depends="build-prepare">
+		<javac srcdir="${src.dir}"
+			   destdir="${build.classes.dir}"
+			   debug="yes"
+			   deprecation="no"
+			   optimize="on"
+			   includeantruntime="no">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<target name="build-prepare">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes.dir}" />
+		<mkdir dir="${build.lib.dir}" />
+	</target>
+
+	<target name="jar" depends="build">
+		<jar destfile="${build.lib.dir}/${project.name}.jar" basedir="${build.classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="com.minnozz.midi2chord.MIDI2ChordApp" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+</project>
