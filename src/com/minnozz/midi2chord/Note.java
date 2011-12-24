@@ -35,6 +35,13 @@ public class Note {
 		return getName() + getOctive();
 	}
 
+	public boolean equals(Object obj) {
+		if(obj instanceof Note) {
+			return equals((Note)obj);
+		}
+		return false;
+	}
+
 	public boolean equals(Note note) {
 		return (getNoteNumber() == note.getNoteNumber());
 	}

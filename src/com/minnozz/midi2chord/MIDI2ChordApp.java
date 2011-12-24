@@ -1,6 +1,7 @@
 package com.minnozz.midi2chord;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MIDI2ChordApp implements Runnable {
 	private NoteSource source;
@@ -44,12 +45,7 @@ public class MIDI2ChordApp implements Runnable {
 			}
 		});
 
-		if(source.connect()) {
-			System.out.println("Source is connected");
-		} else {
-			System.out.println("Error connecting to source");
-			System.exit(1);
-		}
+		source.run();
 	}
 
 	public static void main(String[] args) {

@@ -2,7 +2,7 @@ package com.minnozz.midi2chord;
 
 import java.util.ArrayList;
 
-public abstract class NoteSource {
+public abstract class NoteSource extends Thread {
 	private ArrayList<NoteListener> noteListeners;
 	protected boolean connected;
 	protected ArrayList<Note> currentState;
@@ -11,6 +11,14 @@ public abstract class NoteSource {
 		noteListeners = new ArrayList<NoteListener>();
 		connected = false;
 		currentState = new ArrayList<Note>();
+	}
+
+	public void run() {
+		if(connect()) {
+			System.out.println("Connected to source");
+		} else {
+			System.out.println("Could not connect to source");
+		}
 	}
 
 	public boolean connect() {

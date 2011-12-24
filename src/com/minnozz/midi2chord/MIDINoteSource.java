@@ -12,9 +12,25 @@ public class MIDINoteSource extends NoteSource {
 		System.out.println("Connecting MIDI note source");
 
 		try {
-			transmitter = MidiSystem.getTransmitter();	// Default MIDI source
+			for(MidiDevice.Info info : MidiSystem.getMidiDeviceInfo()) {
+				if(info.getDescription().equals("MIDIMATE II Port 1")) {
+					MidiDevice device = MidiSystem.getMidiDevice(info);
+					try {
+						transmitter = device.getTransmitter();
+						device.open();
+						break;
+					} catch(MidiUnavailableException e) {
+						// Try again
+					}
+				}
+			}
 		} catch(MidiUnavailableException e) {
 			System.out.println(e.getMessage());
+			return false;
+		}
+
+		if(transmitter == null) {
+			System.out.println("Preferred MIDI device could not be found");
 			return false;
 		}
 
