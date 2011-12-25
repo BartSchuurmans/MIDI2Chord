@@ -9,7 +9,16 @@ import java.util.Collections;
 public class ChordFinder {
 	final private static HashMap<Semitones, String> TYPES = new HashMap<Semitones, String>() {
 		{
-			put(new Semitones(new boolean[] {true, false, false, false, true, false, false, true, false, false, false, false}), "");
+			//								1				2				3		4				5				6				7			Name
+			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	false,	false}),	"");
+			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"7");
+			put(new Semitones(new boolean[]{true,	false,	false,	true,	false,	false,	false,	true,	false,	false,	false,	false}),	"m");
+			put(new Semitones(new boolean[]{true,	false,	false,	true,	false,	false,	false,	true,	false,	false,	true,	false}),	"m7");
+			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	false,	true}),		"maj7");
+			put(new Semitones(new boolean[]{true,	false,	false,	false,	false,	true,	false,	true,	false,	false,	false,	false}),	"sus4");
+			put(new Semitones(new boolean[]{true,	false,	false,	false,	false,	true,	false,	true,	false,	false,	true,	false}),	"7sus4");
+			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	true,	false,	false}),	"6");
+			put(new Semitones(new boolean[]{true,	false,	false,	true,	false,	false,	false,	true,	false,	true,	false,	false}),	"m6");
 		}
 	};
 
@@ -42,8 +51,6 @@ public class ChordFinder {
 
 			String type = getType(semitones);
 			if(type != null) {
-				System.out.println("Chord found!");
-
 				Chord chord = new Chord(fundamental.getName(), type, notes);
 				if(!options.contains(chord)) {
 					options.add(chord);
