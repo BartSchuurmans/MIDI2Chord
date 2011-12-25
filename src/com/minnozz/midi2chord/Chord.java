@@ -3,19 +3,17 @@ package com.minnozz.midi2chord;
 import java.util.ArrayList;
 
 public class Chord {
-	private String name;
+	private String fundamental;
+	private String type;
 	private ArrayList<Note> notes;
 
-	public Chord(String name, ArrayList<Note> notes) {
-		this.name = name;
+	public Chord(String fundamental, String type, ArrayList<Note> notes) {
+		this.fundamental = fundamental;
+		this.type = type;
 		this.notes = notes;
 	}
 
 	public String getName() {
-		return name;
-	}
-
-	public ArrayList<Note> getNotes() {
-		return notes;
+		return fundamental + type;
 	}
 }

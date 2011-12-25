@@ -35,6 +35,14 @@ public class Note {
 		return getName() + getOctive();
 	}
 
+	public int getSemitonesAbove(Note fundamental) {
+		int semitonesAbove = (getNoteNumber() - fundamental.getNoteNumber()) % 12;
+		while(semitonesAbove < 0) {
+			semitonesAbove += 12;
+		}
+		return semitonesAbove;
+	}
+
 	public boolean equals(Object obj) {
 		if(obj instanceof Note) {
 			return equals((Note)obj);

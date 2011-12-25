@@ -81,6 +81,7 @@ public abstract class NoteSource extends Thread {
 	}
 
 	private void sendUpdate(NoteListener noteListener, ArrayList<Note> notes) {
-		noteListener.onUpdate(notes);
+		ArrayList<Note> copy = (ArrayList<Note>)notes.clone();
+		noteListener.onUpdate(copy);
 	}
 }
