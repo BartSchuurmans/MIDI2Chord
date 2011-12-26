@@ -16,4 +16,8 @@ public class Chord {
 	public String getName() {
 		return fundamental + type;
 	}
+
+	public String getType() {
+		return type;
+	}
 }
