@@ -44,9 +44,17 @@ public class ChordFinder {
 	public ArrayList<Chord> find(ArrayList<Note> notes) {
 		ArrayList<Chord> options = new ArrayList<Chord>();
 
+		// Avoid using the same note in different octives twice
+		ArrayList<String> used = new ArrayList<String>();
+
 		// Try all notes as fundamental
 		for(int i = 0; i < notes.size(); i++) {
 			Note fundamental = notes.get(i);
+
+			if(used.contains(fundamental.getName())) {
+				continue;
+			}
+			used.add(fundamental.getName());
 
 			Semitones semitones = new Semitones();
 			semitones.setPresent(0);
@@ -72,7 +80,7 @@ public class ChordFinder {
 		// Sort options by likelihood (defined by the order in the TYPES list)
 		Collections.sort(options, new Comparator<Chord>() {
 			public int compare(Chord c1, Chord c2) {
-				return (TYPE_ORDER.indexOf(c2) - TYPE_ORDER.indexOf(c1));
+				return (TYPE_ORDER.indexOf(c1.getType()) - TYPE_ORDER.indexOf(c2.getType()));
 			}
 		});
 
