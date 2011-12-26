@@ -9,7 +9,7 @@ import java.util.Collections;
 public class ChordFinder {
 	final private static HashMap<Semitones, String> TYPES = new HashMap<Semitones, String>() {
 		{
-			//								1				2				3		4				5				6				7			Name
+			//								1/8				2/9				3/10	4/11			5/12			6/13			7/14		Name
 			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	false,	false}),	"");
 			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"7");
 			put(new Semitones(new boolean[]{true,	false,	false,	true,	false,	false,	false,	true,	false,	false,	false,	false}),	"m");
@@ -19,6 +19,20 @@ public class ChordFinder {
 			put(new Semitones(new boolean[]{true,	false,	false,	false,	false,	true,	false,	true,	false,	false,	true,	false}),	"7sus4");
 			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	true,	false,	false}),	"6");
 			put(new Semitones(new boolean[]{true,	false,	false,	true,	false,	false,	false,	true,	false,	true,	false,	false}),	"m6");
+			put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"9");
+			put(new Semitones(new boolean[]{true,	false,	true,	true,	false,	false,	false,	true,	false,	false,	true,	false}),	"m9");
+			put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	false,	false,	true,	false,	false,	false,	true}),		"maj9");
+			put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	false,	false,	true,	false,	true,	false,	false}),	"6/9");
+			put(new Semitones(new boolean[]{true,	false,	false,	true,	true,	false,	false,	true,	false,	false,	true,	false}),	"7+9");
+			put(new Semitones(new boolean[]{true,	true,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"7-9");
+			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	false,	true,	false,	false,	false}),	"aug");
+			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	false,	true,	false,	true,	false}),	"7+5");
+			put(new Semitones(new boolean[]{true,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false,	false}),	"dim");
+			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	true,	false,	false,	false,	false,	false}),	"-5");
+			put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	true,	false,	false,	false,	true,	false}),	"7-5");
+			put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	false,	true,	false,	false,	false,	true,	false}),	"9-5");
+			put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	true,	false,	true,	false,	false,	true,	false}),	"11");
+			put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	true,	false,	true,	false,	true,	true,	false}),	"13");
 		}
 	};
 
