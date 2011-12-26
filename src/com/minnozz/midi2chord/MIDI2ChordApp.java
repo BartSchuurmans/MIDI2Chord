@@ -24,6 +24,9 @@ public class MIDI2ChordApp implements Runnable {
 		if(type.equals("cli")) {
 			return new CLIChordDisplayer();
 		}
+		if(type.equals("gui")) {
+			return new GUIChordDisplayer();
+		}
 		throw new IllegalArgumentException();
 	}
 
@@ -40,11 +43,12 @@ public class MIDI2ChordApp implements Runnable {
 			}
 
 			public void onUpdate(ArrayList<Note> notes) {
-				Chord chord = chordFinder.findMostLikely(notes);
-				displayer.display(chord);
+				ArrayList<Chord> options = chordFinder.find(notes);
+				displayer.display(options, notes);
 			}
 		});
 
+		displayer.run();
 		source.run();
 	}
 
