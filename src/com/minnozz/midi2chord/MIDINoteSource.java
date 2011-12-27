@@ -22,7 +22,7 @@ public class MIDINoteSource extends NoteSource {
 					continue;
 				}
 
-				subNoteSources.add(new SubNoteSource(device, info.getName() +" ("+ info.getVendor() +")"));
+				subNoteSources.add(new SubNoteSource(device, info.getName() +" ("+ info.getDescription() +", "+ info.getVendor() +")"));
 			}
 		} catch(MidiUnavailableException e) {
 			// No MIDI devices available
@@ -48,12 +48,14 @@ public class MIDINoteSource extends NoteSource {
 		try {
 			device = (MidiDevice)subNoteSource.getIdentifier();
 			transmitter = device.getTransmitter();
-			transmitter.setReceiver(new MIDINoteSourceReceiver());
 			device.open();
+			transmitter.setReceiver(new MIDINoteSourceReceiver());
+
 			System.out.println("Changed sub note source to "+ subNoteSource.getDisplayName());
 		} catch(MidiUnavailableException e) {
 			// XXX: Ignore
-			System.out.println("Error changing sub note source to "+ subNoteSource.getDisplayName());
+
+			System.out.println("Error changing sub note source to "+ subNoteSource.getDisplayName() +": "+ e.getMessage());
 		}
 	}
 
@@ -77,7 +79,7 @@ public class MIDINoteSource extends NoteSource {
 
 	private class MIDINoteSourceReceiver implements Receiver {
 		public void close() {
-			// Ignore
+			System.out.println("Closing MIDI note receiver");
 		}
 
 		public void send(MidiMessage m, long timeStamp) {
