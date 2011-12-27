@@ -10,30 +10,30 @@ public class ChordFinder {
 	final private static LinkedHashMap<Semitones, String> TYPES;
 	static {
 		TYPES = new LinkedHashMap<Semitones, String>();
-		//								1/8				2/9				3/10	4/11			5/12			6/13			7/14		Name
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	false,	false}),	"");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"7");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	true,	false,	false,	false,	true,	false,	false,	false,	false}),	"m");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	true,	false,	false,	false,	true,	false,	false,	true,	false}),	"m7");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	false,	true}),		"maj7");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	false,	false,	true,	false,	true,	false,	false,	false,	false}),	"sus4");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	false,	false,	true,	false,	true,	false,	false,	true,	false}),	"7sus4");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	true,	false,	true,	false,	false}),	"6");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	true,	false,	false,	false,	true,	false,	true,	false,	false}),	"m6");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"9");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	true,	true,	false,	false,	false,	true,	false,	false,	true,	false}),	"m9");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	false,	false,	true,	false,	false,	false,	true}),		"maj9");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	false,	false,	true,	false,	true,	false,	false}),	"6/9");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	true,	true,	false,	false,	true,	false,	false,	true,	false}),	"7+9");
-		TYPES.put(new Semitones(new boolean[]{true,	true,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"7-9");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	false,	true,	false,	false,	false}),	"aug");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	false,	false,	true,	false,	true,	false}),	"7+5");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false,	false}),	"dim");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	true,	false,	false,	false,	false,	false}),	"-5");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	false,	false,	true,	false,	true,	false,	false,	false,	true,	false}),	"7-5");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	false,	true,	false,	false,	false,	true,	false}),	"9-5");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	true,	false,	true,	false,	false,	true,	false}),	"11");
-		TYPES.put(new Semitones(new boolean[]{true,	false,	true,	false,	true,	true,	false,	true,	false,	true,	true,	false}),	"13");
+		//										1/8				2/9				3/10	4/11			5/12			6/13			7/14		Name
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	false,	false}),	"");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"7");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	false,	false,	false,	true,	false,	false,	false,	false}),	"m");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	false,	false,	false,	true,	false,	false,	true,	false}),	"m7");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	false,	true}),		"maj7");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	false,	true,	false,	true,	false,	false,	false,	false}),	"sus4");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	false,	true,	false,	true,	false,	false,	true,	false}),	"7sus4");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	true,	false,	true,	false,	false}),	"6");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	false,	false,	false,	true,	false,	true,	false,	false}),	"m6");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"9");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	true,	false,	false,	false,	true,	false,	false,	true,	false}),	"m9");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	false,	false,	true,	false,	false,	false,	true}),		"maj9");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	false,	false,	true,	false,	true,	false,	false}),	"6/9");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	true,	false,	false,	true,	false,	false,	true,	false}),	"7+9");
+		TYPES.put(new Semitones(new boolean[]{	true,	true,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"7-9");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	false,	true,	false,	false,	false}),	"aug");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	false,	true,	false,	true,	false}),	"7+5");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false,	false}),	"dim");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	true,	false,	false,	false,	false,	false}),	"-5");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	true,	false,	false,	false,	true,	false}),	"7-5");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	false,	true,	false,	false,	false,	true,	false}),	"9-5");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	true,	false,	true,	false,	false,	true,	false}),	"11");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	true,	false,	true,	false,	true,	true,	false}),	"13");
 	};
 
 	final private static ArrayList<String> TYPE_ORDER;
