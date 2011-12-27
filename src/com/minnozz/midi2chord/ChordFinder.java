@@ -34,6 +34,8 @@ public class ChordFinder {
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	false,	true,	false,	false,	false,	true,	false}),	"9-5");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	true,	false,	true,	false,	false,	true,	false}),	"11");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	true,	false,	true,	false,	true,	true,	false}),	"13");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	false,	false,	true,	false,	false,	false,	false}),	"add9");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	true,	false,	false,	false,	true,	false,	false,	false,	false}),	"madd9");
 	};
 
 	final private static ArrayList<String> TYPE_ORDER;
