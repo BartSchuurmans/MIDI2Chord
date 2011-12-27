@@ -3,6 +3,10 @@ package com.minnozz.midi2chord;
 import java.util.ArrayList;
 
 public class CLIChordDisplayer extends ChordDisplayer {
+	public CLIChordDisplayer(MIDI2ChordApp app) {
+		super(app);
+	}
+
 	@Override
 	public void display(ArrayList<Chord> options, ArrayList<Note> notes) {
 		if(!options.isEmpty()) {

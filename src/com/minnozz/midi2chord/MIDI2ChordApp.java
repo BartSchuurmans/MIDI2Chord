@@ -4,74 +4,87 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MIDI2ChordApp implements Runnable {
-	private NoteSource source;
+	private static enum NoteSourceType { MIDI };
+	private static enum ChordDisplayerType { CLI, GUI };
+
+	private NoteSourceType noteSourceType;
+	private ChordDisplayerType chordDisplayerType;
+
+	private NoteSource noteSource;
 	private ChordFinder chordFinder;
-	private ChordDisplayer displayer;
+	private ChordDisplayer chordDisplayer;
 
-	public MIDI2ChordApp(NoteSource source, ChordDisplayer displayer) {
-		this.source = source;
-		this.displayer = displayer;
+	public MIDI2ChordApp(NoteSourceType noteSourceType, ChordDisplayerType chordDisplayerType) {
+		this.noteSourceType = noteSourceType;
+		this.chordDisplayerType = chordDisplayerType;
 	}
 
-	private static NoteSource createNoteSource(String type) {
-		if(type.equals("midi")) {
-			return new MIDINoteSource();
+	private void createNoteSource() {
+		switch(noteSourceType) {
+			case MIDI:
+				noteSource = new MIDINoteSource();
+				break;
 		}
-		throw new IllegalArgumentException();
 	}
 
-	private static ChordDisplayer createChordDisplayer(String type) {
-		if(type.equals("cli")) {
-			return new CLIChordDisplayer();
+	private void createChordFinder() {
+		chordFinder = new ChordFinder();
+	}
+
+	private void createChordDisplayer() {
+		switch(chordDisplayerType) {
+			case CLI:
+				chordDisplayer = new CLIChordDisplayer(this);
+				break;
+			case GUI:
+				chordDisplayer = new GUIChordDisplayer(this);
+				break;
 		}
-		if(type.equals("gui")) {
-			return new GUIChordDisplayer();
-		}
-		throw new IllegalArgumentException();
+	}
+
+	private void createNoteListener() {
+		noteSource.registerNoteListener(new NoteListener() {
+			public void onUpdate(ArrayList<Note> notes) {
+				ArrayList<Chord> options = chordFinder.find(notes);
+				chordDisplayer.display(options, notes);
+			}
+		});
 	}
 
 	public void run() {
-		chordFinder = new ChordFinder();
+		createNoteSource();
+		createChordFinder();
+		createChordDisplayer();
+		createNoteListener();
 
-		source.registerNoteListener(new NoteListener() {
-			public void onConnect() {
-				System.out.println("Note listener connected");
-			}
+		chordDisplayer.run();
+		noteSource.run();
+	}
 
-			public void onDisconnect() {
-				System.out.println("Note listener disconnected");
-			}
+	public ArrayList<SubNoteSource> getSubNoteSources() {
+		return noteSource.getSubNoteSources();
+	}
 
-			public void onUpdate(ArrayList<Note> notes) {
-				ArrayList<Chord> options = chordFinder.find(notes);
-				displayer.display(options, notes);
-			}
-		});
-
-		displayer.run();
-		source.run();
+	public void setSubNoteSource(SubNoteSource subNoteSource) {
+		noteSource.setSubNoteSource(subNoteSource);
 	}
 
 	public static void main(String[] args) {
-		if(args.length != 2) {
-			usage();
+		// Defaults
+		NoteSourceType noteSourceType = NoteSourceType.MIDI;
+		ChordDisplayerType chordDisplayerType = ChordDisplayerType.GUI;
+
+		// Parse command line arguments
+		for(int i = 0; i < args.length; i++) {
+			String arg = args[i];
+
+			if(arg.equals("--cli")) {
+				chordDisplayerType = ChordDisplayerType.CLI;
+			} else {
+				throw new IllegalArgumentException("Invalid argument: "+ arg);
+			}
 		}
 
-		NoteSource source;
-		ChordDisplayer displayer;
-		try {
-			source = createNoteSource(args[0]);
-			displayer = createChordDisplayer(args[1]);
-
-			new MIDI2ChordApp(source, displayer).run();
-		} catch(IllegalArgumentException e) {
-			System.out.println("Error: "+ e.getMessage());
-			usage();
-		}
-	}
-
-	private static void usage() {
-		System.out.println("Usage: MIDI2ChordApp <noteSourceType> <chordDisplayerType>");
-		System.exit(1);
+		new MIDI2ChordApp(noteSourceType, chordDisplayerType).run();
 	}
 }

@@ -5,46 +5,73 @@ import javax.sound.midi.*;
 
 public class MIDINoteSource extends NoteSource {
 	private Transmitter transmitter;
+	private MidiDevice device;
 	private ArrayList<Note> currentNotes;
 
 	@Override
-	protected boolean _connect() {
-		System.out.println("Connecting MIDI note source");
+	public ArrayList<SubNoteSource> getSubNoteSources() {
+		ArrayList<SubNoteSource> subNoteSources = new ArrayList<SubNoteSource>();
 
 		try {
 			for(MidiDevice.Info info : MidiSystem.getMidiDeviceInfo()) {
-				if(info.getDescription().equals("MIDIMATE II Port 1")) {
-					MidiDevice device = MidiSystem.getMidiDevice(info);
-					try {
-						transmitter = device.getTransmitter();
-						device.open();
-						break;
-					} catch(MidiUnavailableException e) {
-						// Try again
-					}
+				MidiDevice device = MidiSystem.getMidiDevice(info);
+				try {
+					transmitter = device.getTransmitter();
+				} catch(MidiUnavailableException e) {
+					// Device has no transmitter
+					continue;
 				}
+
+				subNoteSources.add(new SubNoteSource(device, info.getName() +" ("+ info.getVendor() +")"));
 			}
 		} catch(MidiUnavailableException e) {
-			System.out.println(e.getMessage());
-			return false;
+			// No MIDI devices available
 		}
 
-		if(transmitter == null) {
-			System.out.println("Preferred MIDI device could not be found");
-			return false;
+		return subNoteSources;
+	}
+
+	@Override
+	public void setSubNoteSource(SubNoteSource subNoteSource) {
+		if(transmitter != null) {
+			transmitter.close();
+		}
+		if(device != null) {
+			device.close();
 		}
 
+		if(subNoteSource.getIdentifier() == null) {
+			// No device
+			return;
+		}
+
+		try {
+			device = (MidiDevice)subNoteSource.getIdentifier();
+			transmitter = device.getTransmitter();
+			transmitter.setReceiver(new MIDINoteSourceReceiver());
+			device.open();
+			System.out.println("Changed sub note source to "+ subNoteSource.getDisplayName());
+		} catch(MidiUnavailableException e) {
+			// XXX: Ignore
+			System.out.println("Error changing sub note source to "+ subNoteSource.getDisplayName());
+		}
+	}
+
+	@Override
+	protected boolean connect() {
 		currentNotes = new ArrayList<Note>();
-		transmitter.setReceiver(new MIDINoteSourceReceiver());
-
 		return true;
 	}
 
 	@Override
-	protected void _disconnect() {
+	protected void disconnect() {
 		if(transmitter != null) {
 			transmitter.close();
 			transmitter = null;
+		}
+		if(device != null) {
+			device.close();
+			device = null;
 		}
 	}
 

@@ -2,17 +2,24 @@ package com.minnozz.midi2chord;
 
 import java.util.ArrayList;
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class GUIChordDisplayer extends ChordDisplayer {
+	private JFrame frame;
 	private JLabel bigChord;
 	private JLabel alternative1;
 	private JLabel alternative2;
 	private JLabel alternative3;
 
-	@Override
-	public void run() {
-		JFrame frame = new JFrame("MIDI2Chord");
+	public GUIChordDisplayer(MIDI2ChordApp app) {
+		super(app);
+
+		createInterface();
+	}
+
+	private void createInterface() {
+		frame = new JFrame("MIDI2Chord");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Container contentPane = frame.getContentPane();
@@ -44,25 +51,50 @@ public class GUIChordDisplayer extends ChordDisplayer {
 		alternative3.setMinimumSize(new Dimension(150, 80));
 		alternative3.setFont(mediumFont);
 
+		JComboBox sourcePicker = new JComboBox(app.getSubNoteSources().toArray());
+		sourcePicker.insertItemAt(new SubNoteSource(null, "Select a MIDI device..."), 0);
+		sourcePicker.setSelectedIndex(0);
+		sourcePicker.setEditable(false);
+		sourcePicker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				SubNoteSource selectedSubNoteSource = (SubNoteSource)((JComboBox)event.getSource()).getSelectedItem();
+				app.setSubNoteSource(selectedSubNoteSource);
+			}
+		});
+		sourcePicker.setRenderer(new DefaultListCellRenderer() {
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				return super.getListCellRendererComponent(list, ((SubNoteSource)value).getDisplayName(), index, isSelected, cellHasFocus);
+			}
+		});
+
 		layout.setHorizontalGroup(
-			layout.createSequentialGroup()
-				.addComponent(bigChord)
-				.addGroup(layout.createParallelGroup()
-					.addComponent(alternative1)
-					.addComponent(alternative2)
-					.addComponent(alternative3)
+			layout.createParallelGroup()
+				.addComponent(sourcePicker)
+				.addGroup(layout.createSequentialGroup()
+					.addComponent(bigChord)
+					.addGroup(layout.createParallelGroup()
+						.addComponent(alternative1)
+						.addComponent(alternative2)
+						.addComponent(alternative3)
+					)
 				)
 		);
 		layout.setVerticalGroup(
-			layout.createParallelGroup()
-				.addComponent(bigChord)
-				.addGroup(layout.createSequentialGroup()
-					.addComponent(alternative1)
-					.addComponent(alternative2)
-					.addComponent(alternative3)
+			layout.createSequentialGroup()
+				.addComponent(sourcePicker)
+				.addGroup(layout.createParallelGroup()
+					.addComponent(bigChord)
+					.addGroup(layout.createSequentialGroup()
+						.addComponent(alternative1)
+						.addComponent(alternative2)
+						.addComponent(alternative3)
+					)
 				)
 		);
+	}
 
+	@Override
+	public void run() {
 		frame.pack();
 
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
