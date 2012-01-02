@@ -12,12 +12,14 @@ public class ChordFinder {
 		TYPES = new LinkedHashMap<Semitones, String>();
 		//										1/8				2/9				3/10	4/11			5/12			6/13			7/14		Name
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	false,	false}),	"");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	false,	false,	false,	true,	false,	false,	false,	false}),	"5");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"7");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	false,	false,	false,	true,	false,	false,	false,	false}),	"m");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	false,	false,	false,	true,	false,	false,	true,	false}),	"m7");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	true,	false,	false,	false,	true}),		"maj7");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	false,	true,	false,	true,	false,	false,	false,	false}),	"sus4");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	false,	true,	false,	true,	false,	false,	true,	false}),	"7sus4");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	false,	false,	false,	true,	false,	false,	false,	false}),	"sus2");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	true,	false,	true,	false,	false}),	"6");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	false,	false,	false,	true,	false,	true,	false,	false}),	"m6");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"9");
