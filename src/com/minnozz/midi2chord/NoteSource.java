@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 public abstract class NoteSource extends Thread {
 	private ArrayList<NoteListener> noteListeners;
-	protected boolean connected;
-	protected ArrayList<Note> currentState;
+	protected ArrayList<Note> currentNotes;
 
 	public NoteSource() {
 		noteListeners = new ArrayList<NoteListener>();
-		currentState = new ArrayList<Note>();
+		currentNotes = new ArrayList<Note>();
 	}
 
 	public void run() {
@@ -27,17 +26,19 @@ public abstract class NoteSource extends Thread {
 		synchronized(noteListeners) {
 			if(!noteListeners.contains(noteListener)) {
 				noteListeners.add(noteListener);
-				sendUpdate(noteListener, currentState);
+				sendUpdate(noteListener, currentNotes);
 			}
 		}
 	}
 
 	protected void broadcastUpdate(ArrayList<Note> notes) {
 		synchronized(noteListeners) {
+			System.out.println("Broadcasting update: "+ Note.concat(notes));
+
 			for(NoteListener noteListener : noteListeners) {
 				sendUpdate(noteListener, notes);
 			}
-			currentState = notes;
+			currentNotes = notes;
 		}
 	}
 
