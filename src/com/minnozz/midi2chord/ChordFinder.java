@@ -1,6 +1,7 @@
 package com.minnozz.midi2chord;
 
 import java.lang.StringBuilder;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Collections;
@@ -49,17 +50,12 @@ public class ChordFinder {
 	public ArrayList<Chord> find(ArrayList<Note> notes) {
 		ArrayList<Chord> options = new ArrayList<Chord>();
 
-		// Avoid using the same note in different octives twice
-		ArrayList<String> used = new ArrayList<String>();
+		// Sort notes to avoid weird inconsistencies in chord order
+		Collections.sort(notes);
 
 		// Try all notes as fundamental
 		for(int i = 0; i < notes.size(); i++) {
 			Note fundamental = notes.get(i);
-
-			if(used.contains(fundamental.getName())) {
-				continue;
-			}
-			used.add(fundamental.getName());
 
 			Semitones semitones = new Semitones();
 			semitones.setPresent(0);
@@ -85,9 +81,32 @@ public class ChordFinder {
 		// Sort options by likelihood (defined by the order in the TYPES list)
 		Collections.sort(options, new Comparator<Chord>() {
 			public int compare(Chord c1, Chord c2) {
-				return (TYPE_ORDER.indexOf(c1.getType()) - TYPE_ORDER.indexOf(c2.getType()));
+				int diff;
+				// Chords that have the fundamental (are no inversion) as their root note are more likely
+				if((diff = ((c1.isInversion() ? 1 : 0) - (c2.isInversion() ? 1 : 0))) != 0) {
+					System.out.println(c1.getName() +" differs from "+ c2.getName() +" by inversion ("+ diff +")");
+					return diff;
+				}
+				// Chords that are higher (lower index) in the TYPE_ORDER are more likely
+				if((diff = (TYPE_ORDER.indexOf(c1.getType()) - TYPE_ORDER.indexOf(c2.getType()))) != 0) {
+					System.out.println(c1.getName() +" differs from "+ c2.getName() +" by type order ("+ diff +")");
+					return diff;
+				}
+				// Sort on fundamental to ensure a deterministic sort order
+				if((diff = (Arrays.asList(Note.NOTES).indexOf(c2.getFundamental()) - Arrays.asList(Note.NOTES).indexOf(c1.getFundamental()))) != 0) {
+					System.out.println(c1.getName() +" differs from "+ c2.getName() +" by fundamental ("+ diff +")");
+					return diff;
+				}
+				System.out.println(c1.getName() +" and "+ c2.getName() +" are equal");
+				return 0;
 			}
 		});
+
+		java.lang.StringBuilder sb = new java.lang.StringBuilder("Sorted options:");
+		for(Chord chord : options) {
+			sb.append(" "+ chord.getName());
+		}
+		System.out.println(sb.toString());
 
 		return options;
 	}

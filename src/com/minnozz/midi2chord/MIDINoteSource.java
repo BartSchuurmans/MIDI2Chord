@@ -6,7 +6,6 @@ import javax.sound.midi.*;
 public class MIDINoteSource extends NoteSource {
 	private Transmitter transmitter;
 	private MidiDevice device;
-	private ArrayList<Note> currentNotes;
 
 	@Override
 	public ArrayList<SubNoteSource> getSubNoteSources() {

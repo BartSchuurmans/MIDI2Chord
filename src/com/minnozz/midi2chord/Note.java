@@ -1,8 +1,9 @@
 package com.minnozz.midi2chord;
 
 import java.lang.Math;
+import java.lang.Comparable;
 
-public class Note {
+public class Note implements Comparable<Note> {
 	final public static String[] NOTES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
 	private int noteNumber;
@@ -50,7 +51,26 @@ public class Note {
 		return false;
 	}
 
-	public boolean equals(Note note) {
-		return (getNoteNumber() == note.getNoteNumber());
+	private boolean equals(Note other) {
+		return (getNoteNumber() == other.getNoteNumber());
+	}
+
+	public int compareTo(Note other) {
+		if(equals(other)) {
+			return 0;
+		}
+		return noteNumber > other.getNoteNumber() ? 1 : -1;
+	}
+
+	public static String concat(java.util.ArrayList<Note> notes) {
+		java.lang.StringBuilder sb = new java.lang.StringBuilder();
+		for(Note note : notes) {
+			if(sb.length() == 0) {
+				sb.append(note.getNameWithOctive());
+			} else {
+				sb.append(" "+ note.getNameWithOctive());
+			}
+		}
+		return sb.toString();
 	}
 }
