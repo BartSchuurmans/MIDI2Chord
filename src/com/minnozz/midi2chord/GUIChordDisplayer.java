@@ -33,22 +33,22 @@ public class GUIChordDisplayer extends ChordDisplayer {
 		// Create display areas
 		bigChord = new JLabel("-");
 		bigChord.setHorizontalAlignment(SwingConstants.CENTER);
-		bigChord.setMinimumSize(new Dimension(450, 240));
+		bigChord.setMinimumSize(new Dimension(600, 240));
 		bigChord.setFont(bigFont);
 
 		alternative1 = new JLabel("-");
 		alternative1.setHorizontalAlignment(SwingConstants.CENTER);
-		alternative1.setMinimumSize(new Dimension(150, 80));
+		alternative1.setMinimumSize(new Dimension(200, 80));
 		alternative1.setFont(mediumFont);
 
 		alternative2 = new JLabel("-");
 		alternative2.setHorizontalAlignment(SwingConstants.CENTER);
-		alternative2.setMinimumSize(new Dimension(150, 80));
+		alternative2.setMinimumSize(new Dimension(200, 80));
 		alternative2.setFont(mediumFont);
 
 		alternative3 = new JLabel("-");
 		alternative3.setHorizontalAlignment(SwingConstants.CENTER);
-		alternative3.setMinimumSize(new Dimension(150, 80));
+		alternative3.setMinimumSize(new Dimension(200, 80));
 		alternative3.setFont(mediumFont);
 
 		JComboBox sourcePicker = new JComboBox(app.getSubNoteSources().toArray());
