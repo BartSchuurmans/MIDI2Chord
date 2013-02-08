@@ -30,7 +30,8 @@ public class ChordFinder {
 		TYPES.put(new Semitones(new boolean[]{	true,	true,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false}),	"7-9");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	false,	true,	false,	false,	false}),	"aug");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	false,	false,	true,	false,	true,	false}),	"7+5");
-		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false,	false}),	"dim");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	false,	false,	true,	false,	false,	false,	false,	false}),	"dim");
+		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	true,	false,	false,	true,	false,	false,	true,	false,	false}),	"dim7");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	true,	false,	false,	false,	false,	false}),	"-5");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	false,	false,	true,	false,	true,	false,	false,	false,	true,	false}),	"7-5");
 		TYPES.put(new Semitones(new boolean[]{	true,	false,	true,	false,	true,	false,	true,	false,	false,	false,	true,	false}),	"9-5");
