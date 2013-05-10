@@ -105,37 +105,9 @@ public class GUIChordDisplayer extends ChordDisplayer {
 
 	@Override
 	public void display(ArrayList<Chord> options, ArrayList<Note> notes) {
-		switch(options.size()) {
-			case 0:
-				bigChord.setText("-");
-				alternative1.setText("-");
-				alternative2.setText("-");
-				alternative3.setText("-");
-				break;
-			case 1:
-				bigChord.setText(options.get(0).getName());
-				alternative1.setText("-");
-				alternative2.setText("-");
-				alternative3.setText("-");
-				break;
-			case 2:
-				bigChord.setText(options.get(0).getName());
-				alternative1.setText(options.get(1).getName());
-				alternative2.setText("-");
-				alternative3.setText("-");
-				break;
-			case 3:
-				bigChord.setText(options.get(0).getName());
-				alternative1.setText(options.get(1).getName());
-				alternative2.setText(options.get(2).getName());
-				alternative3.setText("-");
-				break;
-			default:
-				bigChord.setText(options.get(0).getName());
-				alternative1.setText(options.get(1).getName());
-				alternative2.setText(options.get(2).getName());
-				alternative3.setText(options.get(3).getName());
-				break;
-		}
+		bigChord.setText(options.size() >= 1 ? options.get(0).getName() : "-");
+		alternative1.setText(options.size() >= 2 ? options.get(1).getName() : "-");
+		alternative2.setText(options.size() >= 3 ? options.get(2).getName() : "-");
+		alternative3.setText(options.size() >= 4 ? options.get(3).getName() : "-");
 	}
 }
